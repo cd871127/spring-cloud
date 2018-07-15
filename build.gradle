@@ -39,7 +39,7 @@ configure(subprojects.findAll { it.name != 'lib-core' }) {
 
 configure(subprojects.findAll { it.name.startsWith('biz-')||it.name=='server-zuul' }) {
     dependencies {
-        compile project(':lib-core')
+//        compile project(':lib-core')
         compile 'org.springframework.boot:spring-boot-starter-web'
         compile 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
         compile 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
