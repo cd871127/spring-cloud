@@ -1,0 +1,47 @@
+version '0.0.1'
+
+buildscript {
+    repositories {
+        maven {
+            url aliyunMevenRepo
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+allprojects {
+    group 'io.github.cd871127.hodgepodge'
+    repositories {
+        maven {
+            url aliyunMevenRepo
+        }
+    }
+    apply plugin: 'java'
+    apply plugin: 'idea'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+}
+
+configure(subprojects.findAll { it.name != 'lib-core' }) {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+}
+
+configure(subprojects.findAll { it.name.startsWith('biz-')||it.name=='server-zuul' }) {
+    dependencies {
+        compile project(':lib-core')
+        compile 'org.springframework.boot:spring-boot-starter-web'
+        compile 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+        compile 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+    }
+}

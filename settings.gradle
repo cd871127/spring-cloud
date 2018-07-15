@@ -1,0 +1,4 @@
+rootProject.name = 'spring-cloud'
+rootProject.name = 'spring-cloud'
+include 'server-eureka'
+
