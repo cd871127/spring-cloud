@@ -1,0 +1,31 @@
+server:
+  port: 9000
+
+spring:
+  application:
+    name: eureka-cluster
+  security:
+    user:  #eureka账号密码
+      name: admin
+      password: 123456
+
+eureka:
+  instance:
+    hostname: localhost
+    #优先使用ip作为标识
+    prefer-ip-address: true
+    #注册名字
+#    appname: ${spring.application.name}
+#    leaseRenewalIntervalInSeconds: 1
+#    leaseExpirationDurationInSeconds: 2
+  client:
+    #是否向服务注册中心注册自己
+    register-with-eureka: false
+    #是否检索服务
+    fetch-registry: false
+    serviceUrl:
+      #服务注册中心的配置内容，指定服务注册中心的位置
+      defaultZone: http://${spring.security.user.name}:${spring.security.user.password}@localhost:9000/eureka/
+  server:
+    #自我保护 需要客户端有容错机制
+    enable-self-preservation: true
